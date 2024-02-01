@@ -86,12 +86,18 @@ export enum Type {
 
 export enum Problem {
   CLASSIFICATION,
-  REGRESSION
+  REGRESSION,
+  PERCEPTRON,
+  DOUBLE_PERCEPTRON,
+  MATCHING_FUNCTION
 }
 
 export let problems = {
   "classification": Problem.CLASSIFICATION,
-  "regression": Problem.REGRESSION
+  "regression": Problem.REGRESSION,
+  "perceptron": Problem.PERCEPTRON,
+  "double-perceptron": Problem.DOUBLE_PERCEPTRON,
+  "matching-function": Problem.MATCHING_FUNCTION
 };
 
 export interface Property {
