@@ -8,8 +8,19 @@ const tanh: ActivationFunction = x => (Math.exp(x) - Math.exp(-x)) / (Math.exp(x
 const sigmoid: ActivationFunction = x => 1 / (1 + Math.exp(-x));
 const linear: ActivationFunction = x => x;
 
+// Function to update the display of slider values
+function updateSliderDisplay(sliderId: string, displayId: string): void {
+    const slider: HTMLInputElement = document.getElementById(sliderId) as HTMLInputElement;
+    const display: HTMLElement = document.getElementById(displayId) as HTMLElement;
+    display.textContent = slider.value;
+    slider.addEventListener('input', () => {
+        display.textContent = slider.value;
+    });
+}
+
 // Function to generate random inputs
 function generateRandomInputs(): void {
+    console.log("Generating random input");
     (document.getElementById('input1') as HTMLInputElement).value = Math.random().toFixed(2);
     (document.getElementById('input2') as HTMLInputElement).value = Math.random().toFixed(2);
     (document.getElementById('input3') as HTMLInputElement).value = Math.random().toFixed(2);
@@ -80,4 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('generateRandom')?.addEventListener('click', generateRandomInputs);
     document.getElementById('updatePerceptron')?.addEventListener('click', updatePerceptron);
     initPlot();
+    // Initialize slider value displays
+    updateSliderDisplay('weight1', 'weight1-value');
+    updateSliderDisplay('weight2', 'weight2-value');
+    updateSliderDisplay('weight3', 'weight3-value');
+    updateSliderDisplay('bias', 'bias-value');
 });
