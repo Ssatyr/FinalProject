@@ -105,8 +105,18 @@ function updatePlot() {
 
     const layout = {
         title: 'Perceptron Output',
-        xaxis: {title: 'Input'},
-        yaxis: {title: 'Output'},
+        xaxis: {
+            title: 'Input',
+            showline: true,
+            showgrid: true, // Hides the gridlines
+            zeroline: false, // Hides the zero line
+        },
+        yaxis: {
+            title: 'Output',
+            showline: true,
+            showgrid: true, // Hides the gridlines
+            zeroline: false, // Hides the zero line
+        },
         showlegend: true,
         annotations: [
             {
