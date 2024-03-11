@@ -39,7 +39,8 @@ limitations under the License.
   <link rel="stylesheet" href="bundle.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
   <script src="lib.js"></script>
-  <script src="perceptron.bundle.js"></script>
+  
+  <script src="bundle.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 </head>
@@ -64,15 +65,15 @@ limitations under the License.
   </header>
   <div id="perceptron-content">
     <div class="inputs">
-      <label>Input 1: <input type="number" id="input1" value="0"></label>
-      <label>Input 2: <input type="number" id="input2" value="0"></label>
-      <label>Input 3: <input type="number" id="input3" value="0"></label>
+      <label>Input 1: <input type="number" id="input1" value="1" step="0.1"></label>
+      <label>Input 2: <input type="number" id="input2" value="1" step="0.1"></label>
+      <label>Input 3: <input type="number" id="input3" value="1" step="0.1"></label>
       <button id="generateRandom">Generate Random Inputs</button>
     </div>
     <div class="weights">
-      <label>Weight 1: <input type="range" id="weight1" min="-1" max="1" step="0.01" value="0"><span id="weight1-value">0</span></label>
-      <label>Weight 2: <input type="range" id="weight2" min="-1" max="1" step="0.01" value="0"><span id="weight2-value">0</span></label>
-      <label>Weight 3: <input type="range" id="weight3" min="-1" max="1" step="0.01" value="0"><span id="weight3-value">0</span></label>
+      <label>Weight 1: <input type="range" id="weight1" min="-5" max="5" step="0.5" value="1"><span id="weight1-value">1</span></label>
+      <label>Weight 2: <input type="range" id="weight2" min="-5" max="5" step="0.5" value="1"><span id="weight2-value">1</span></label>
+      <label>Weight 3: <input type="range" id="weight3" min="-5" max="5" step="0.5" value="1"><span id="weight3-value">1</span></label>
     </div>
     <div class="bias">
       <label>Bias: <input type="range" id="bias" min="-10" max="10" step="0.1" value="0"><span id="bias-value">0</span></label>
@@ -84,11 +85,11 @@ limitations under the License.
           <option value="tanh">Tanh</option>
           <option value="sigmoid">Sigmoid</option>
           <option value="linear">Linear</option>
+          <option value="step">Step</option>
         </select>
       </label>
     </div>
     <div class="plot" id="plot"></div>
-    <button id="updatePerceptron">Update Perceptron</button>  
   </div>  
   <div id = "doubleperceptron-content">
     <div class="inputs">
@@ -104,7 +105,7 @@ limitations under the License.
         <label>Bias 2: <input type="range" id="bias2d" min="-10" max="10" step="0.1" value="0"></label>
       </div>
     </div>
-    <div class="chart" id="chart"></div>
+    <div class="plot" id="plot"></div>
   </div>
   <div id = "matchingfunction-content">
   </div> 
@@ -368,8 +369,6 @@ limitations under the License.
     </div>
   </div>
 
-  <script src="bundle.js"></script>
-  <script src="perceptron.bundle.js"></script>
   <!-- Google analytics -->
   <script src="analytics.js"></script>
   <script>

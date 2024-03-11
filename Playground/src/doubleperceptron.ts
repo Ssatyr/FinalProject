@@ -40,23 +40,24 @@ class DoublePerceptron {
   }
 
   updateChart(): void {
-    const xValues = Array.from({length: 21}, (_, i) => i - 10); // Generate x values from -10 to 10
-    const yValues = xValues.map(x => {
-      // Calculate the output for each x value through both perceptrons
-      const output1 = this.relu(x * this.weight1 + this.bias1);
-      const finalOutput = this.relu(output1 * this.weight2 + this.bias2);
-      return finalOutput;
-    });
+    console.error('NOT IMPLEMENTED');
+    // const xValues = Array.from({length: 21}, (_, i) => i - 10); // Generate x values from -10 to 10
+    // const yValues = xValues.map(x => {
+    //   // Calculate the output for each x value through both perceptrons
+    //   const output1 = this.relu(x * this.weight1 + this.bias1);
+    //   const finalOutput = this.relu(output1 * this.weight2 + this.bias2);
+    //   return finalOutput;
+    // });
   
-    const data = [{
-      x: xValues,
-      y: yValues,
-      type: 'scatter',
-      mode: 'lines+markers',
-      name: 'Perceptron Output'
-    }];
+    // const data = [{
+    //   x: xValues,
+    //   y: yValues,
+    //   type: 'scatter',
+    //   mode: 'lines+markers',
+    //   name: 'Perceptron Output'
+    // }];
   
-    Plotly.newPlot('chart', data);
+    // Plotly.newPlot('chart', data);
   }  
 }
 

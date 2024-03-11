@@ -1,5 +1,4 @@
-import Plotly from 'plotly.js-dist';
-
+import * as Plotly from 'plotly.js-dist-min';
 type ActivationFunction = (x: number) => number;
 
 // Define activation functions
@@ -7,6 +6,7 @@ const relu: ActivationFunction = x => x > 0 ? x : 0;
 const tanh: ActivationFunction = x => (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
 const sigmoid: ActivationFunction = x => 1 / (1 + Math.exp(-x));
 const linear: ActivationFunction = x => x;
+const step: ActivationFunction = x => x > 0 ? 1 : 0;
 
 // Function to update the display of slider values
 function updateSliderDisplay(sliderId: string, displayId: string): void {
@@ -16,84 +16,134 @@ function updateSliderDisplay(sliderId: string, displayId: string): void {
     slider.addEventListener('input', () => {
         display.textContent = slider.value;
     });
+    updatePlot();
 }
 
 // Function to generate random inputs
 function generateRandomInputs(): void {
     console.log("Generating random input");
-    (document.getElementById('input1') as HTMLInputElement).value = Math.random().toFixed(2);
-    (document.getElementById('input2') as HTMLInputElement).value = Math.random().toFixed(2);
-    (document.getElementById('input3') as HTMLInputElement).value = Math.random().toFixed(2);
+    // Set the value of input1 to a random number between -2 and 2
+    document.getElementById('input1').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
+    document.getElementById('input2').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
+    document.getElementById('input3').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
+    updatePlot();
 }
 
-// Initialize Plot
-function initPlot(): void {
-    const initialData = [{
-        x: [0],
-        y: [0],
-        type: 'scatter',
-        mode: 'lines+markers',
-        name: 'Activation Output'
-    }];
 
-    const layout = {
-        title: 'Perceptron Activation Function',
-        xaxis: { title: 'Input' },
-        yaxis: { title: 'Output' }
-    };
-
-    Plotly.newPlot('plot', initialData, layout);
+// Function to attach event listener to sliders for automatic perceptron update
+function attachUpdateListenerToSlider(sliderId: string): void {
+    const slider: HTMLInputElement = document.getElementById(sliderId) as HTMLInputElement;
+    updatePlot();
 }
 
-// Function to update perceptron and plot
-function updatePerceptron(): void {
+function perceptronOutput(input1, input2, input3, weight1, weight2, weight3, bias) {
+    return input1 * weight1 + input2 * weight2 + input3 * weight3 + bias;
+}
+
+function updatePlot() {
+    console.log('updatePlot called');
     const input1 = parseFloat((document.getElementById('input1') as HTMLInputElement).value);
     const input2 = parseFloat((document.getElementById('input2') as HTMLInputElement).value);
     const input3 = parseFloat((document.getElementById('input3') as HTMLInputElement).value);
-
     const weight1 = parseFloat((document.getElementById('weight1') as HTMLInputElement).value);
     const weight2 = parseFloat((document.getElementById('weight2') as HTMLInputElement).value);
     const weight3 = parseFloat((document.getElementById('weight3') as HTMLInputElement).value);
-
     const bias = parseFloat((document.getElementById('bias') as HTMLInputElement).value);
+    const activationFunction = (document.getElementById('activationFunction') as HTMLInputElement).value;
 
-    let weightedSum = input1 * weight1 + input2 * weight2 + input3 * weight3 + bias;
+    const perceptronRawOutput = perceptronOutput(input1, input2, input3, weight1, weight2, weight3, bias);
 
-    const activationFunc = (document.getElementById('activationFunction') as HTMLSelectElement).value;
-    let activationOutput: number;
-
-    switch (activationFunc) {
-        case 'relu':
-            activationOutput = relu(weightedSum);
-            break;
-        case 'tanh':
-            activationOutput = tanh(weightedSum);
-            break;
-        case 'sigmoid':
-            activationOutput = sigmoid(weightedSum);
-            break;
-        case 'linear':
-        default:
-            activationOutput = linear(weightedSum);
-            break;
-    }
-
-    const update = {
-        x: [[input1]],
-        y: [[activationOutput]]
+    // Define the activation function based on selection
+    const activationFunctions = {
+        relu, tanh, sigmoid, linear, step
     };
 
-    Plotly.extendTraces('plot', update, [0]);
+    const activatedOutput = activationFunctions[activationFunction](perceptronRawOutput);
+
+    const xValues = [];
+    for (let i = -10; i <= 10; i += 0.5) {
+        xValues.push(i);
+    }
+
+    // y = x line extended
+    const trace1 = {
+        x: xValues,
+        y: xValues,
+        mode: 'lines',
+        name: 'y = x',
+        line: {color: 'green'}
+    };
+
+    // Activation function line
+    const traceActivationFunction = {
+        x: xValues,
+        y: xValues.map(x => activationFunctions[activationFunction](x)),
+        mode: 'lines',
+        name: activationFunction.toUpperCase(),
+        line: {color: 'red'}
+    };
+
+    // Plotting perceptron's raw output before activation
+    const trace2 = {
+        x: [perceptronRawOutput],
+        y: [perceptronRawOutput],
+        mode: 'markers',
+        name: 'Perceptron Raw Output',
+        marker: {color: 'blue', size: 12}
+    };
+
+    // Plotting perceptron's activated output
+    const trace3 = {
+        x: [perceptronRawOutput],
+        y: [activatedOutput],
+        mode: 'markers',
+        name: 'Activated Output',
+        marker: {color: 'red', size: 12}
+    };
+
+    const data = [trace1, traceActivationFunction, trace2, trace3];
+
+    const layout = {
+        title: 'Perceptron Output',
+        xaxis: {title: 'Input'},
+        yaxis: {title: 'Output'},
+        showlegend: true,
+        annotations: [
+            {
+                x: perceptronRawOutput,
+                y: activatedOutput,
+                xref: 'x',
+                yref: 'y',
+                text: 'Activated Output',
+                showarrow: true,
+                arrowhead: 2,
+                ax: 0,
+                ay: -40,
+                bgcolor: 'white'
+            }
+        ],
+        width: 800, // Set the width of the plot
+        height: 600, // Set the height of the plot
+        margin: { l: 50, r: 50, b: 100, t: 100, pad: 4 } // Adjust the margins as needed
+    };
+    
+    Plotly.newPlot('plot', data, layout);
+    
 }
 
-// Event listeners
+// Attach event listeners to sliders after DOM content is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('generateRandom')?.addEventListener('click', generateRandomInputs);
-    document.getElementById('updatePerceptron')?.addEventListener('click', updatePerceptron);
-    initPlot();
-    // Initialize slider value displays
+    document.getElementById('generateRandom').addEventListener('click', generateRandomInputs);
+    // Initialize slider value displays and attach update listeners
     updateSliderDisplay('weight1', 'weight1-value');
     updateSliderDisplay('weight2', 'weight2-value');
     updateSliderDisplay('weight3', 'weight3-value');
     updateSliderDisplay('bias', 'bias-value');
+    // Attach update listeners to sliders
+    attachUpdateListenerToSlider('weight1');
+    attachUpdateListenerToSlider('weight2');
+    attachUpdateListenerToSlider('weight3');
+    attachUpdateListenerToSlider('bias');
+    document.getElementById('activationFunction').addEventListener('change', updatePlot);
 });
+

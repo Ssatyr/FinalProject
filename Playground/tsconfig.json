@@ -1,13 +1,8 @@
 {
   "compilerOptions": {
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "target": "es6", 
-    "lib": ["es2017", "dom"],
     "module": "commonjs",
-    "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true
+    "removeComments": true,
+    "preserveConstEnums": true
   },
   "exclude": [
     "node_modules" 
