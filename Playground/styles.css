@@ -12,6 +12,53 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+/* Perceptron module container styles */
+.perceptron-container {
+  padding: 20px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+/* Input styling */
+input[type="number"], input[type="range"] {
+  border: 1px solid #ddd;
+  height: 35px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border-radius: 4px;
+}
+
+/* Button styling */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .perceptron-container {
+    padding: 10px;
+  }
+}
+
 #perceptron-content .inputs,
 #perceptron-content .weights,
 #perceptron-content .bias,
