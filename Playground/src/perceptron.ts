@@ -2,11 +2,11 @@ import * as Plotly from 'plotly.js-dist-min';
 type ActivationFunction = (x: number) => number;
 
 // Define activation functions
-const relu: ActivationFunction = x => x > 0 ? x : 0;
-const tanh: ActivationFunction = x => (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
-const sigmoid: ActivationFunction = x => 1 / (1 + Math.exp(-x));
-const linear: ActivationFunction = x => x;
 const step: ActivationFunction = x => x > 0 ? 1 : 0;
+const linear: ActivationFunction = x => x;
+const sigmoid: ActivationFunction = x => 1 / (1 + Math.exp(-x));
+const tanh: ActivationFunction = x => (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));
+const relu: ActivationFunction = x => x > 0 ? x : 0;
 
 // Function to update the display of slider values
 function updateSliderDisplay(sliderId: string, displayId: string): void {
@@ -26,14 +26,12 @@ function generateRandomInputs(): void {
     document.getElementById('input1').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
     document.getElementById('input2').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
     document.getElementById('input3').setAttribute('value', (Math.random() * 4 - 2).toFixed(2));
-    updatePlot();
 }
 
 
 // Function to attach event listener to sliders for automatic perceptron update
 function attachUpdateListenerToSlider(sliderId: string): void {
     const slider: HTMLInputElement = document.getElementById(sliderId) as HTMLInputElement;
-    updatePlot();
 }
 
 function perceptronOutput(input1, input2, input3, weight1, weight2, weight3, bias) {
@@ -55,7 +53,7 @@ function updatePlot() {
 
     // Define the activation function based on selection
     const activationFunctions = {
-        relu, tanh, sigmoid, linear, step
+        step, linear, sigmoid, tanh, relu
     };
 
     const activatedOutput = activationFunctions[activationFunction](perceptronRawOutput);
@@ -155,5 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
     attachUpdateListenerToSlider('weight3');
     attachUpdateListenerToSlider('bias');
     document.getElementById('activationFunction').addEventListener('change', updatePlot);
+    // Attach event listener to input elements
+    document.getElementById('input1').addEventListener('input', updatePlot);
+    document.getElementById('input2').addEventListener('input', updatePlot);
+    document.getElementById('input3').addEventListener('input', updatePlot);
+    // Attach event listener to the sliders
+    document.getElementById('weight1').addEventListener('input', updatePlot);
+    document.getElementById('weight2').addEventListener('input', updatePlot);
+    document.getElementById('weight3').addEventListener('input', updatePlot);
+    document.getElementById('bias').addEventListener('input', updatePlot);
 });
 

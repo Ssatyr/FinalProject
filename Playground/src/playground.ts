@@ -1,5 +1,6 @@
 import * as nn from "./nn";
 import './perceptron';
+import './doubleperceptron';
 import {HeatMap, reduceMatrix} from "./heatmap";
 import {
   State,

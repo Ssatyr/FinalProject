@@ -67,8 +67,15 @@ label {
 }
 
 #perceptron-content .plot {
-  width: 400px;
-  height: 400px;
+  width: 800px;
+  height: 800px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+#doubleperceptron-content .plot{
+  width: 800px;
+  height: 800px;
   border: 1px solid #ccc;
   margin-top: 20px;
 }

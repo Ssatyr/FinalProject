@@ -39,7 +39,6 @@ limitations under the License.
   <link rel="stylesheet" href="bundle.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet" type="text/css">
   <script src="lib.js"></script>
-  
   <script src="bundle.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
@@ -81,11 +80,11 @@ limitations under the License.
     <div class="activation-function">
       <label>Activation Function:
         <select id="activationFunction">
-          <option value="relu">ReLU</option>
-          <option value="tanh">Tanh</option>
-          <option value="sigmoid">Sigmoid</option>
-          <option value="linear">Linear</option>
           <option value="step">Step</option>
+          <option value="linear">Linear</option>
+          <option value="sigmoid">Sigmoid</option>
+          <option value="tanh">Tanh</option>
+          <option value="relu">ReLU</option>
         </select>
       </label>
     </div>
@@ -95,16 +94,14 @@ limitations under the License.
     <div class="inputs">
       <label>Input: <input type="number" id="input" value="0"></label>
     </div>
-    <div class="perceptrons">
-      <div class="perceptron" id="perceptron1">
-        <label>Weight 1: <input type="range" id="weight1d" min="-1" max="1" step="0.01" value="0"></label>
-        <label>Bias 1: <input type="range" id="bias1d" min="-10" max="10" step="0.1" value="0"></label>
-      </div>
-      <div class="perceptron" id="perceptron2">
-        <label>Weight 2: <input type="range" id="weight2d" min="-1" max="1" step="0.01" value="0"></label>
-        <label>Bias 2: <input type="range" id="bias2d" min="-10" max="10" step="0.1" value="0"></label>
-      </div>
+    <div class="perceptron" id="perceptron1">
+      <label>Weight 1: <input type="range" id="weight1d" min="-1" max="1" step="0.01" value="0"><span id="weight1d-value">0</span></label>
+      <label>Bias 1: <input type="range" id="bias1d" min="-10" max="10" step="0.1" value="0"><span id="bias1d-value">0</span></label>
     </div>
+    <div class="perceptron" id="perceptron2">
+        <label>Weight 2: <input type="range" id="weight2d" min="-1" max="1" step="0.01" value="0"><span id="weight2d-value">0</span></label>
+        <label>Bias 2: <input type="range" id="bias2d" min="-10" max="10" step="0.1" value="0"><span id="bias2d-value">0</span></label>
+    </div>  
     <div class="plot" id="plot"></div>
   </div>
   <div id = "matchingfunction-content">
