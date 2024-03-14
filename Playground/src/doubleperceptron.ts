@@ -71,7 +71,16 @@ function updatePlot(): void {
         marker: { size: 12, color: 'rgb(33, 150, 243)' }
     };
 
-    const data = [traceReLU1, traceReLU2, traceCurrentInput, traceCurrentOutput];
+    const traceFinalOutput = {
+        x: [2], // This assumes the final output is positioned at x = 2
+        y: [output2],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'Final Output',
+        marker: { size: 12, color: 'rgb(255, 99, 71)' } // Choose a distinct color
+    };
+
+    const data = [traceReLU1, traceReLU2, traceCurrentInput, traceCurrentOutput, traceFinalOutput];
 
     // Define layout
     const layout = {
@@ -85,7 +94,7 @@ function updatePlot(): void {
     };
 
     // Plot the graph
-    Plotly.newPlot('plot', data, layout);
+    Plotly.newPlot('plot2', data, layout);
 }
 
 function updateSliderDisplay(sliderId: string, displayId: string): void {
@@ -100,11 +109,10 @@ function updateSliderDisplay(sliderId: string, displayId: string): void {
           display.textContent = slider.value;
       });
   }
-  updatePlot();
-}
+ }
 
-// Set up event listeners for the input elements
-function attachEventListeners(): void {
+// Call the function to attach event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
     updateSliderDisplay('weight1d', 'weight1d-value');
     updateSliderDisplay('bias1d', 'bias1d-value');
     updateSliderDisplay('weight2d', 'weight2d-value');
@@ -114,12 +122,4 @@ function attachEventListeners(): void {
     document.getElementById('bias1d').addEventListener('input', updatePlot);
     document.getElementById('weight2d').addEventListener('input', updatePlot);
     document.getElementById('bias2d').addEventListener('input', updatePlot);
-    updatePlot();
-}
-
-
-// Call the function to attach event listeners when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    attachEventListeners();
-    updatePlot(); // Initial plot
 });
